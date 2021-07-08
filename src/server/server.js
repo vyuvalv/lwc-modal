@@ -5,22 +5,17 @@ const helmet = require('helmet');
 const path = require('path');
 
 const app = express();
-app.use(helmet());
-app.use(compression());
-app.use(express.json());
+app.use(helmet(),compression(),express.json());
 
-
+//
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 5000;
 const SERVER_URL = `http://${HOST}:${PORT}`;
 // const DIST_DIR = './dist';
 const DIST_DIR = './src/client';
 
-
-app.use(express.static(DIST_DIR));
-
 // Use SPA and ignore any url path locations and always serves index
-app.use('*', (req, res) => {
+app.use('*',(req, res) => {
     res.sendFile(path.resolve(DIST_DIR, 'index.html'));
 });
 
